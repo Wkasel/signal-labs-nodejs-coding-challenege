@@ -13,50 +13,35 @@
           <h1>convert CSV files to JSON objects</h1>
           <div id="ninjas"></div>
         </div>
-	
-        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+	<script type="text/javascript" src="index.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
         <script src="https://unpkg.com/react@15/dist/react.js"></script>
         <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
-
+	<button onclick="funcname()">hello fuckret</button>
+	<script>
+	  var funcname = () => { app.post('/convert', (req, res) => {
+	      // read from CSV test file in project dir
+	      readFile('./test-data.csv', 'utf-8', (err, fileContent) => {
+		  // If error occors during reading of file, display error msg
+		  if (err) {
+		      console.log(err);
+		      throw new Error(err);
+		  }
+		  // convert file contents to json and set as request body contents
+		  req.body.content = csvjson.toObject(fileContent);
+		  console.log(req.body.content);
+		  // if filepath is null
+		  if (req.body.content == null) {
+		      res.json(['error', 'No data found']);
+		  }
+		  // return json
+		  else {
+		      res.json(['json', req.body.content]);
+		  }
+	      });
+	  }); }
+	</script>
         <!-- Create React Component -->
-        <script type="text/babel">
-	  
-          var File = React.createClass({
-	      getInitialState: function(){
-		  return({
-		      jsonfile: []
-		  });
-	      }
-	      
-              render: function(){
-		  var jsonfile = this.state.jsonfile;
-		  return(
-			<div id="ninja-container">
-                        <form id="search" onSubmit={this.handleSubmit}>
-                        <label>Enter your file:</label>
-                        <input type="text" ref="file" placeholder="file" required />
-                        <input type="submit" value="Convert" />
-                        </form>
-                        <ul>{jsonfile}</ul>
-                    </div>
-                );
-            },
-            handleSubmit: function(e){
-                e.preventDefault();
-                var file = this.refs.file.value;
-                fetch('/convert?file=' + file).then(function(data){
-                    return data.json();
-                }).then( json => {
-                    this.setState({
-                        jsonfile: json
-                    });
-                    console.log(json);
-                });
-            }
-        });
-        ReactDOM.render(<File />, document.getElementById('jsonfile'));
-        </script>
-
-
     </body>
 </html>
