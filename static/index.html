@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>CSVtoJSON</title>
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <link href="/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+
+      <h1 class="title">CSVtoJSON - REST API</h1>
+        <div id="homepage">
+          <h1>convert CSV files to JSON objects</h1>
+          <div id="ninjas"></div>
+        </div>
+	
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script src="https://unpkg.com/react@15/dist/react.js"></script>
+        <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+
+        <!-- Create React Component -->
+        <script type="text/babel">
+	  
+          var File = React.createClass({
+	      getInitialState: function(){
+		  return({
+		      jsonfile: []
+		  });
+	      }
+	      
+              render: function(){
+		  var jsonfile = this.state.jsonfile;
+		  return(
+			<div id="ninja-container">
+                        <form id="search" onSubmit={this.handleSubmit}>
+                        <label>Enter your file:</label>
+                        <input type="text" ref="file" placeholder="file" required />
+                        <input type="submit" value="Convert" />
+                        </form>
+                        <ul>{jsonfile}</ul>
+                    </div>
+                );
+            },
+            handleSubmit: function(e){
+                e.preventDefault();
+                var file = this.refs.file.value;
+                fetch('/convert?file=' + file).then(function(data){
+                    return data.json();
+                }).then( json => {
+                    this.setState({
+                        jsonfile: json
+                    });
+                    console.log(json);
+                });
+            }
+        });
+        ReactDOM.render(<File />, document.getElementById('jsonfile'));
+        </script>
+
+
+    </body>
+</html>
