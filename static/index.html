@@ -14,34 +14,39 @@
           <div id="ninjas"></div>
         </div>
 
-	<script type="text/javascript" src="index.js"></script>
+	<script data-main="index.js" src="../require.js"></script>
+	<script type="html/javascript", src="index.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
         <script src="https://unpkg.com/react@15/dist/react.js"></script>
         <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
-	<button onclick="funcname()">hello fuckret</button>
 	<script>
-	  var funcname = () => { app.post('/convert', (req, res) => {
-	      // read from CSV test file in project dir
-	      readFile('./test-data.csv', 'utf-8', (err, fileContent) => {
-		  // If error occors during reading of file, display error msg
-		  if (err) {
-		      console.log(err);
-		      throw new Error(err);
-		  }
-		  // convert file contents to json and set as request body contents
-		  req.body.content = csvjson.toObject(fileContent);
-		  console.log(req.body.content);
-		  // if filepath is null
-		  if (req.body.content == null) {
-		      res.json(['error', 'No data found']);
-		  }
-		  // return json
-		  else {
-		      res.json(['json', req.body.content]);
-		  }
+	  require(['convertapp'])
+	  convertapp = () => {
+	      app.post('/convert', (req, res) => {
+		  // read from CSV test file in project dir
+		  readFile('./test-data.csv', 'utf-8', (err, fileContent) => {
+		      // If error occors during reading of file, display error msg
+		      if (err) {
+			  console.log(err);
+			  throw new Error(err);
+		      }
+		      // convert file contents to json and set as request body contents
+		      req.body.content = csvjson.toObject(fileContent);
+		      console.log(req.body.content);
+		      // if filepath is null
+		      if (req.body.content == null) {
+			  res.json(['error', 'No data found']);
+		      }	
+		      // return json
+		      else {
+			  res.json(['json', req.body.content]);
+		      console.log(req.body.content);
+		      }
+		  });
 	      });
-	  }); }
+	  }
 	</script>
-        <!-- Create React Component -->
+	<button onclick="convertapp()">Convert CSV</button>
+	<!-- Create React Component -->
     </body>
 </html>

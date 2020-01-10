@@ -81,8 +81,13 @@ span.false{
     background: #ff5252;
 }
 button{
-    float: right;
-    background: green;
+    margin: 0 auto;
+    margin-left: 240px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    width: 50%;
+    position: center;
+    background: blue;
     border: 0;
     padding: 5px 10px;
     color: #fff;
