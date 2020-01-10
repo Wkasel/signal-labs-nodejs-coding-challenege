@@ -13,14 +13,12 @@
           <h1>convert CSV files to JSON objects</h1>
           <div id="ninjas"></div>
         </div>
-
-	<script data-main="index.js" src="../require.js"></script>
+	
 	<script type="html/javascript", src="index.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
         <script src="https://unpkg.com/react@15/dist/react.js"></script>
         <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
 	<script>
-	  require(['convertapp'])
 	  convertapp = () => {
 	      app.post('/convert', (req, res) => {
 		  // read from CSV test file in project dir
@@ -47,6 +45,5 @@
 	  }
 	</script>
 	<button onclick="convertapp()">Convert CSV</button>
-	<!-- Create React Component -->
     </body>
 </html>
