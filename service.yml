@@ -2,7 +2,7 @@
 services:
 
   inventory:
-    git_url: git@github.com:trevor-ofarrell/signal-labs-nodejs-coding-challenege
+    git_url: https://github.com/trevor-ofarrell/signal-labs-nodejs-coding-challenege
     git_branch: master
     command: npm start
     build_root: .
