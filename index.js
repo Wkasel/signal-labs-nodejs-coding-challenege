@@ -15,6 +15,7 @@ const app = express();
 // use body-parser and cors middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.urlencoded());
 
 // set up static files
 app.use(express.static('static'));
@@ -31,25 +32,28 @@ app.delete('/', (req, res) => res.send('Received a DELETE HTTP method'));
 // const stream = createReadStream('.txt');
 // fetch('/convert/', { method: 'POST', body: stream });
 
-// route to utilize CSVtoJSON API
+// var button = select('#submit');
+
 app.post('/convert', (req, res) => {
-  // read from CSV test file in project dir
-  readFile('./test-data.csv', 'utf-8', (err, fileContent) => {
+	// read from CSV test file in project dir
+	console.log(req.body.file)
+	readFile(String(req.body.file), 'utf-8', (err, fileContent) => {
     // If error occors during reading of file, display error msg
     if (err) {
-      console.log(err);
-      throw new Error(err);
+	console.log(err);
+	throw new Error(err);
     }
     // convert file contents to json and set as request body contents
     req.body.content = csvjson.toObject(fileContent);
     console.log(req.body.content);
     // if filepath is null
     if (req.body.content == null) {
-      res.json(['error', 'No data found']);
-    }
+	res.json(['error', 'No data found']);
+    }	
     // return json
     else {
-      res.json(['json', req.body.content]);
-    }
-  });
+		res.json(['json', req.body.content]);
+		console.log(req.body.content);
+	    }
+	});
 });

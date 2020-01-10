@@ -13,37 +13,19 @@
           <h1>convert CSV files to JSON objects</h1>
           <div id="ninjas"></div>
         </div>
-	
-	<script type="html/javascript", src="index.js"></script>
+	<script type="html/javascript" src="../index.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-        <script src="https://unpkg.com/react@15/dist/react.js"></script>
-        <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
-	<script>
-	  convertapp = () => {
-	      app.post('/convert', (req, res) => {
-		  // read from CSV test file in project dir
-		  readFile('./test-data.csv', 'utf-8', (err, fileContent) => {
-		      // If error occors during reading of file, display error msg
-		      if (err) {
-			  console.log(err);
-			  throw new Error(err);
-		      }
-		      // convert file contents to json and set as request body contents
-		      req.body.content = csvjson.toObject(fileContent);
-		      console.log(req.body.content);
-		      // if filepath is null
-		      if (req.body.content == null) {
-			  res.json(['error', 'No data found']);
-		      }	
-		      // return json
-		      else {
-			  res.json(['json', req.body.content]);
-		      console.log(req.body.content);
-		      }
-		  });
-	      });
-	  }
-	</script>
-	<button onclick="convertapp()">Convert CSV</button>
+  <script src="https://unpkg.com/react@15/dist/react.js"></script>
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <form action="/convert" method="POST">
+    <div>
+      <input type="file" id="file" name="file" value="add file to covert">
+    </div>
+    <div>
+      <br>
+      <br>
+      <button>Convert CSV</button>
+    </div>
+  </form>
     </body>
 </html>

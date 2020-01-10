@@ -82,17 +82,23 @@ span.false{
 }
 button{
     margin: 0 auto;
-    margin-left: 240px;
+    margin-left: 80px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     width: 50%;
-    position: center;
+    position: relative;
     background: blue;
     border: 0;
     padding: 5px 10px;
     color: #fff;
-    display: inline-block;
     border-radius: 4px;
     cursor: pointer;
+    text-align: center;
 }
 button.false{display: none;}
+
+#file{
+    position: absolute;
+    margin-left: 120px;
+    text-align: center;
+}
