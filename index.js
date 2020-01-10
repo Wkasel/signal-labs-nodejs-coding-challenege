@@ -29,31 +29,25 @@ app.post('/', (req, res) => res.send('Received a POST HTTP method'));
 app.put('/', (req, res) => res.send('Received a PUT HTTP method'));
 app.delete('/', (req, res) => res.send('Received a DELETE HTTP method'));
 
-// const stream = createReadStream('.txt');
-// fetch('/convert/', { method: 'POST', body: stream });
-
-// var button = select('#submit');
-
+// HTTP post method for converting file to JSON, populated by html form
 app.post('/convert', (req, res) => {
-	// read from CSV test file in project dir
-	console.log(req.body.file)
-	readFile(String(req.body.file), 'utf-8', (err, fileContent) => {
-    // If error occors during reading of file, display error msg
-    if (err) {
-	console.log(err);
-	throw new Error(err);
-    }
-    // convert file contents to json and set as request body contents
-    req.body.content = csvjson.toObject(fileContent);
-    console.log(req.body.content);
-    // if filepath is null
-    if (req.body.content == null) {
-	res.json(['error', 'No data found']);
-    }	
-    // return json
-    else {
-		res.json(['json', req.body.content]);
-		console.log(req.body.content);
-	    }
-	});
+    // read from CSV test file in project dir
+    readFile(String(req.body.file), 'utf-8', (err, fileContent) => {
+	// If error occors during reading of file, display error msg
+	if (err) {
+	    console.log(err);
+	    throw new Error(err);
+	}
+	// convert file contents to json and set as request body contents
+	req.body.content = csvjson.toObject(fileContent);
+	// if filepath is null
+	if (req.body.content == null) {
+	    res.json(['error', 'No data found']);
+	}	
+	// return json
+	else {
+	    res.json(['json', req.body.content]);
+	    console.log(req.body.content);
+	}
+    });
 });
