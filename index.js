@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');
     },
    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        cb(null, 'user_upload' + path.extname(file.originalname));
     }
 });
 let upload = multer({storage: storage});
@@ -54,6 +54,6 @@ app.post('/convert', upload.single('file'), (req, res) => {
 		return res.send(400);
 	    }
 	});
-	fs.unlinkSync(req.file.path)
+	// fs.unlinkSync(req.file.path)
     }
 });
