@@ -1,23 +1,23 @@
 {
-    "name": "api-json-csv",
-    "description": "A simple API to receive a CSV, and output a JSON object.",
-    "main": "index.js",
-    "scripts": {
-	"test": "echo \"Error: no test specified\" && exit 1",
-	"start": "nodemon --exec babel-node index.js",
-	"eslint": "eslint ./",
-	"eslint-fix": "eslint ./ --fix",
-	"build": "webpack"
-    },
-    "author": "Trevor O'Farrell",
-    "license": "ISC",
-    "repository": {
-	"type": "git",
-	"url": "git+https://github.com/trevor-ofarrell/signal-labs-nodejs-coding-challenege.git"
-    },
-    "keywords": [],
-    "bugs": {
-	"url": "https://github.com/trevor-ofarrell/signal-labs-nodejs-coding-challenege/issues"
+  "name": "api-json-csv",
+  "description": "A simple API to receive a CSV, and output a JSON object.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node index.js",
+    "eslint": "eslint ./",
+    "eslint-fix": "eslint ./ --fix",
+    "build": "webpack"
+  },
+  "author": "Trevor O'Farrell",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trevor-ofarrell/signal-labs-nodejs-coding-challenege.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/trevor-ofarrell/signal-labs-nodejs-coding-challenege/issues"
   },
   "homepage": "https://github.com/trevor-ofarrell/signal-labs-nodejs-coding-challenege#readme",
   "dependencies": {
@@ -25,6 +25,7 @@
     "cors": "^2.8.5",
     "csvjson": "^5.1.0",
     "express": "^4.17.1",
+    "multer": "^1.4.2",
     "requirejs": "^2.3.6"
   },
   "devDependencies": {

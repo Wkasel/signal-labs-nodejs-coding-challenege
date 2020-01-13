@@ -3,9 +3,21 @@ import cors from 'cors';
 
 import express from 'express';
 
+const fs = require('fs');
 const csvjson = require('csvjson');
 const { readFile } = require('fs');
 const bodyParser = require('body-parser');
+const multer = require('multer');
+const path = require('path');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/');
+    },
+   filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+let upload = multer({storage: storage});
 
 // set up express app
 const app = express();
@@ -27,25 +39,21 @@ app.post('/', (req, res) => res.send('Received a POST HTTP method'));
 app.put('/', (req, res) => res.send('Received a PUT HTTP method'));
 app.delete('/', (req, res) => res.send('Received a DELETE HTTP method'));
 
+const createReadStream = require('fs').createReadStream;
+const createWriteStream = require('fs').createWriteStream;
+
 // HTTP post method for converting file to JSON, populated by html form
-app.post('/convert', (req, res) => {
-  // read from CSV test file in project dir
-  readFile(String(req.body.file), 'utf-8', (err, fileContent) => {
-    // If error occors during reading of file, display error msg
-    if (err) {
-      console.log(err);
-      throw new Error(err);
+app.post('/convert', upload.single('file'), (req, res) => {
+    // read from CSV test file in project dir
+    if (req.file) {
+	readFile(String(req.file.path), 'utf-8', (err, fileContent) => {
+	    console.log(req.file.path)
+	    let jsonobj = csvjson.toObject(fileContent);
+	    res.json([jsonobj]);
+    	    if (err) {
+		return res.send(400);
+	    }
+	});
+	fs.unlinkSync(req.file.path)
     }
-    // convert file contents to json and set as request body contents
-    req.body.content = csvjson.toObject(fileContent);
-    // if filepath is null
-    if (req.body.content == null) {
-      res.json(['error', 'No data found']);
-    }
-    // return json
-    else {
-      res.json(['json', req.body.content]);
-      console.log(req.body.content);
-    }
-  });
 });
