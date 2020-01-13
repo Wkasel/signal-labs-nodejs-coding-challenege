@@ -1,7 +1,7 @@
 // a Node.JS REST API to read a CSV file and return it as a JSON object
-import cors from 'cors';
+const cors = require('cors');
 
-import express from 'express';
+const express = require('express');
 
 const fs = require('fs');
 const csvjson = require('csvjson');
