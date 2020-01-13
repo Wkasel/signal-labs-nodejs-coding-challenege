@@ -1,23 +1,22 @@
 // a Node.JS REST API to read a CSV file and return it as a JSON object
 const cors = require('cors');
-
 const express = require('express');
-
-const fs = require('fs');
 const csvjson = require('csvjson');
 const { readFile } = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
+
+// setting up storage for user uploads
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/');
-    },
-   filename: function(req, file, cb) {
-        cb(null, 'user_upload' + path.extname(file.originalname));
-    }
+  destination(req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename(req, file, cb) {
+    cb(null, 'user_upload' + path.extname(file.originalname));
+  },
 });
-let upload = multer({storage: storage});
+const upload = multer({ storage });
 
 // set up express app
 const app = express();
@@ -39,21 +38,18 @@ app.post('/', (req, res) => res.send('Received a POST HTTP method'));
 app.put('/', (req, res) => res.send('Received a PUT HTTP method'));
 app.delete('/', (req, res) => res.send('Received a DELETE HTTP method'));
 
-const createReadStream = require('fs').createReadStream;
-const createWriteStream = require('fs').createWriteStream;
-
 // HTTP post method for converting file to JSON, populated by html form
 app.post('/convert', upload.single('file'), (req, res) => {
-    // read from CSV test file in project dir
-    if (req.file) {
-	readFile(String(req.file.path), 'utf-8', (err, fileContent) => {
-	    console.log(req.file.path)
-	    let jsonobj = csvjson.toObject(fileContent);
-	    res.json([jsonobj]);
-    	    if (err) {
-		return res.send(400);
-	    }
-	});
-	// fs.unlinkSync(req.file.path)
-    }
+  // if file exists convert to JSON and return, if conversion fails send 400 error code
+  if (req.file) {
+    readFile(String(req.file.path), 'utf-8', (err, fileContent) => {
+      const jsonobj = csvjson.toObject(fileContent);
+      if (jsonobj) {
+        return res.json([jsonobj]);
+      }
+      if (err) {
+        return res.send(400);
+      }
+    });
+  }
 });
