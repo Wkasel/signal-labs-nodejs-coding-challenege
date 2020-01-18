@@ -5,7 +5,6 @@ const csvjson = require('csvjson');
 const { readFile } = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const path = require('path');
 
 // setting up storage for user uploads
 const storage = multer.diskStorage({
@@ -13,7 +12,7 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/');
   },
   filename(req, file, cb) {
-    cb(null, 'user_upload' + path.extname(file.originalname));
+    cb(null, 'user_upload.csv');
   },
 });
 const upload = multer({ storage });
