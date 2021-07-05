@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>CSVtoJSON</title>
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <link href="/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+
+      <h1 class="title">CSVtoJSON - REST API</h1>
+        <div id="homepage">
+          <h1>convert CSV files to JSON objects</h1>
+          <div id="ninjas"></div>
+        </div>
+	<script type="html/javascript" src="../index.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+	
+	<form action="/convert" method="POST" enctype="multipart/form-data">
+	  <div>
+	    <input type="file" accept=".csv" id="file" name="file" value="add file to covert">
+	  </div>
+	  <div>
+	    <br>
+	    <br>
+	    <button>Convert CSV</button>
+	  </div>
+	</form>
+    </body>
+</html>
